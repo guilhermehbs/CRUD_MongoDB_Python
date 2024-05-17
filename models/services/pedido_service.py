@@ -1,9 +1,8 @@
-import string
 import datetime
 from models.entities.pedido import Pedido
 
 class PedidoService:
-    def criar_pedido(self, itens: list, observacoes: string) -> dict:
+    def criar_pedido(self, itens: list, observacoes: str) -> dict:
         data = datetime.datetime.now()
         data_string = data.strftime('%Y-%m-%d')
         pedido = Pedido(data_string, itens, observacoes)
@@ -14,10 +13,7 @@ class PedidoService:
 
         return pedido_data
 
-    def __calcular_valor_total(self, itens: dict) -> int:
+    def __calcular_valor_total(self, itens: list) -> int:
         valor_total = 0
-
-        for valor in itens.values():
-            valor_total += valor
 
         return valor_total

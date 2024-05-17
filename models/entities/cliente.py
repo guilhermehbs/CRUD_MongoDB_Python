@@ -4,7 +4,7 @@ class Cliente:
 
     next_id = 1
 
-    def __init__(self, nome, email, telefone, endereco):
+    def __init__(self, nome: str, email: str, telefone: str, endereco: str):
         self.nome = nome
         self.email = email
         self.telefone = telefone

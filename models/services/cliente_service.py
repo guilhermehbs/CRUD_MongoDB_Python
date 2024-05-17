@@ -1,8 +1,7 @@
-import string
 from models.entities.cliente import Cliente
 
 class ClienteService:
-    def cadastrar_cliente(self, nome: string, email: string, telefone: string, endereco: string) -> dict:
+    def cadastrar_cliente(self, nome: str, email: str, telefone: str, endereco: str) -> dict:
         cliente = Cliente(nome, email, telefone, endereco)
         cliente_data = {
             "nome": cliente.nome,

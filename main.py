@@ -18,9 +18,9 @@ idelivery_repository = conexao_banco()
 
 def limpar_console():
     if os.name == 'nt':
-        os.system('cls')
-    else:
         os.system('clear')
+    else:
+        os.system('cls')
 
 
 def exibir_menu_inicial() -> int:
@@ -78,6 +78,7 @@ def receber_dados_pedido() -> dict:
         print('0 - Sair')
 
         opcao = int(input('Digite a opção desejada: '))
+        quantidade = 1
         if(opcao != 0):
             quantidade = int(input('Digite a quantidade desejada: '))
 
@@ -113,7 +114,34 @@ def receber_dados_cliente() -> dict:
     return dados_cliente
 
 
-def atualizar_pedido() -> bool:
+def escolher_opcao_editar() -> str:
+    campos = ['nome', 'email', 'telefone', 'endereco', 'data_hora', 'observacoes', 'status']
+    print('#' * 10)
+    print('Campos disponiveis')
+    print('#' * 10)
+    for campo in campos:
+        print(f'{campo}')
+    opcao = input('Digite o campo desejado: ')
+    return opcao
+
+
+def editar_documento(filter, opcao) -> None:
+    campos = ['nome', 'email', 'telefone', 'endereco', 'data_hora', 'observacoes', 'status']
+    if opcao.lower() in campos:
+        editado = input('Digite o novo valor: ')
+        if opcao.lower() in ['data_hora', 'observacoes', 'status']:
+            update = {'pedido': {
+                opcao: editado
+            }}
+        else:
+            update = {opcao: editado}
+        idelivery_repository.edit_one_registry(filter, update)
+        print('Editado com sucesso')
+    else:
+        print('Campo não encontrado')
+
+
+def atualizar_pedido() -> None:
     print('#'*10)
     print('Atualização')
     print('#'*10)
@@ -124,14 +152,18 @@ def atualizar_pedido() -> bool:
     match opcao:
         case 1:
             id = input('Digite o id do pedido: ')
-            filter = {'_id': id}
+            filter = {'_id': ObjectId(id)}
 
-            print('Editado com sucesso')
+            opcao = escolher_opcao_editar()
+            editar_documento(filter, opcao)
+
         case 2:
             nome = input('Digite o nome do cliente: ')
             filter = {'nome': nome}
-            
-            print('Editados com sucesso')
+
+            opcao = escolher_opcao_editar()
+            editar_documento(filter, opcao)
+
         case _:
             print('Opção inexistente')
 
@@ -150,11 +182,13 @@ def deletar_pedido() -> bool:
             filter = {'_id': ObjectId(id)}
             idelivery_repository.delete_one_registry(filter)
             print('Excluido com sucesso')
+            return True
         case 2:
             nome = input('Digite o nome do cliente: ')
             filter = {'nome': nome}
             idelivery_repository.delete_many_registries(filter)
             print('Excluidos com sucesso')
+            return True
         case _:
             print('Opção inexistente')
 
@@ -189,7 +223,7 @@ def main():
             case 1:
                 cadastrar_pedido()
             case 2:
-                pass
+                atualizar_pedido()
             case 3:
                 deletar_pedido()
             case 4:
