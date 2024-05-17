@@ -39,12 +39,12 @@ class IDeliveryRepository:
     #Update
     def edit_one_registry(self, filter, update) -> bool:
         collection = self.__db_connection.get_collection(self.__collection_name)
-        data = collection.update_one(filter, {'$set': update})
+        collection.update_one(filter, {'$set': update})
         return True
 
     def edit_many_registries(self, filter, update) -> bool:
         collection = self.__db_connection.get_collection(self.__collection_name)
-        data = collection.update_many(filter, {'$set': update})
+        collection.update_many(filter, {'$set': update})
         return True
 
     #Delete

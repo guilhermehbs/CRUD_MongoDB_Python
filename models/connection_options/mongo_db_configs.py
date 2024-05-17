@@ -1,5 +1,9 @@
+from dotenv import load_dotenv
+import os
+load_dotenv()
+
 mongo_db_infos = {
-    "HOST": "localhost",
-    "PORT": "27017",
-    "DB_NAME": "IDelivery"
+    "host": os.getenv("HOST"),
+    "port": os.getenv("PORT"),
+    "db_name": os.getenv("DB_NAME")
 }
