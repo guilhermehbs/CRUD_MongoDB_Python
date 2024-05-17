@@ -3,8 +3,8 @@ from.mongo_db_configs import mongo_db_infos
 
 class DBConnection:
     def __init__(self) -> None:
-        self.__connection_string = 'mongodb://{}:{}'.format(mongo_db_infos['HOST'], mongo_db_infos['PORT'])
-        self.__database_name = mongo_db_infos['DB_NAME']
+        self.__connection_string = 'mongodb://{}:{}'.format(mongo_db_infos['host'], mongo_db_infos['port'])
+        self.__database_name = mongo_db_infos['db_name']
         self.__client = None
         self.__db_connection = None
 
